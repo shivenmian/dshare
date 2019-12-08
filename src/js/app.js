@@ -85,14 +85,22 @@ App = {
           var name = candidate[1];
           var space = candidate[2];
           var matched = candidate[3];
+          var ipAddress = candidate[4];
 
           // Render candidate Result
-          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + matched + "</td></tr>"
+          if (matched == true) {
+            var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + ipAddress + "</td></tr>"
+          }
+          else {
+            var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + matched + "</td></tr>"
+          }
           candidatesResults.append(candidateTemplate);
 
           // Render candidate ballot option
-          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
-          candidatesSelect.append(candidateOption);
+          if (matched == false) {
+            var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
+            candidatesSelect.append(candidateOption);
+          }
         });
       }
       //return electionInstance.voters(App.account);

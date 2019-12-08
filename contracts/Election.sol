@@ -7,6 +7,7 @@ contract Election {
         string name;
         uint space;
         bool matched;
+        string ipAddress;
     }
 
     // Store accounts that have voted
@@ -24,14 +25,14 @@ contract Election {
     );
 
     constructor () public {
-        addCandidate("Provider 1", 5);
-        addCandidate("Provider 2", 2);
-        addCandidate("Provider 3", 10);
+        addCandidate("Provider 1", 5, "13.456.199.54");
+        addCandidate("Provider 2", 2, "13.456.199.55");
+        addCandidate("Provider 3", 10, "13.456.199.56");
     }
 
-    function addCandidate (string memory _name, uint _space) private {
+    function addCandidate (string memory _name, uint _space, string memory _ipAddress) private {
         candidatesCount ++;
-        candidates[candidatesCount] = Candidate(candidatesCount, _name, _space, false);
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, _space, false, _ipAddress);
     }
 
     function vote (uint _candidateId) public {
