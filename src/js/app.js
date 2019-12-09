@@ -139,10 +139,10 @@ App = {
   },
 
   addUser: function() {
-    var providerName = $("#providerName");
-    var socketAddress = $("#socketAddress");
-    var spaceAvailable = $("#spaceAvailable");
-    console.log(providerName)
+    var providerName = $("#providerName").val();
+    var socketAddress = $("#socketAddress").val();
+    var spaceAvailable = $("#spaceAvailable").val();
+    // console.log(providerName)
   }
 
 };

@@ -54,13 +54,13 @@
             <br>
             <div class="form-group" id=createProvider>
               <br>
-              <form onsubmit="App.addUser();" >
+              <form onsubmit="App.addUser(); return false;" >
                 Provider Name<br>
-                <input type="text" name="providerName"><br>
+                <input type="text" id="providerName"><br>
                 Socket Address<br>
-                <input type="text" name="socketAddress"><br>
+                <input type="text" id="socketAddress"><br>
                 Space Available<br>
-                <input type="text" name="spaceAvailable"><br><br>
+                <input type="text" id="spaceAvailable"><br><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
