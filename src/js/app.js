@@ -56,10 +56,17 @@ App = {
     var electionInstance;
     var loader = $("#loader");
     var content = $("#content");
+    var createProvider = $("#createProvider");
+    var addProviderButton = $("#addProviderButton");
 
     loader.show();
     content.hide();
-
+    createProvider.hide();
+ 
+    addProviderButton.onclick = function(){
+      createProvider.show();
+    }
+    
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -127,8 +134,16 @@ App = {
     }).catch(function(err) {
       console.error(err);
     });
-  }
+  },
+
+  // createUser: function() {
+   
+
+  // }
+
 };
+
+
 
 $(function() {
   $(window).load(function() {
