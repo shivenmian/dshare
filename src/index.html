@@ -50,13 +50,19 @@
               <button type="submit" class="btn btn-primary">Share</button>
               <hr />
             </form>
-            <button id="addProviderButton" type="button" class="btn btn-primary" value="true" >Add Provider</button>
+            <button id="addProviderButton" type="button" class="btn btn-primary" onclick="App.showUserForm();" >Add Provider</button>
+            <br>
             <div class="form-group" id=createProvider>
-              First name:<br>
-              <input type="text" name="firstname" value="Mickey"><br>
-              Last name:<br>
-              <input type="text" name="lastname" value="Mouse"><br><br>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <br>
+              <form onsubmit="App.addUser();" >
+                Provider Name<br>
+                <input type="text" name="providerName"><br>
+                Socket Address<br>
+                <input type="text" name="socketAddress"><br>
+                Space Available<br>
+                <input type="text" name="spaceAvailable"><br><br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
             </div>
             <hr />
             <p id="accountAddress" class="text-center"></p>

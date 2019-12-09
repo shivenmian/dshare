@@ -57,15 +57,12 @@ App = {
     var loader = $("#loader");
     var content = $("#content");
     var createProvider = $("#createProvider");
-    var addProviderButton = $("#addProviderButton");
+    // var addProviderButton = $("#addProviderButton");
 
     loader.show();
     content.hide();
     createProvider.hide();
  
-    addProviderButton.onclick = function(){
-      createProvider.show();
-    }
     
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
@@ -136,10 +133,17 @@ App = {
     });
   },
 
-  // createUser: function() {
-   
+  showUserForm: function() {
+    var createProvider = $("#createProvider");
+    createProvider.show();
+  },
 
-  // }
+  addUser: function() {
+    var providerName = $("#providerName");
+    var socketAddress = $("#socketAddress");
+    var spaceAvailable = $("#spaceAvailable");
+    console.log(providerName)
+  }
 
 };
 
