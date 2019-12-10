@@ -24,13 +24,17 @@ contract Election {
         uint indexed _candidateId
     );
 
-    constructor () public {
-        addCandidate("Provider 1", 5, "13.456.199.54");
-        addCandidate("Provider 2", 2, "13.456.199.55");
-        addCandidate("Provider 3", 10, "13.456.199.56");
-    }
+    event addedEvent(
+        uint indexed _candidateId
+    );
 
-    function addCandidate (string memory _name, uint _space, string memory _ipAddress) private {
+    // constructor () public {
+    //     addCandidate("Provider 1", 5, "13.456.199.54");
+    //     addCandidate("Provider 2", 2, "13.456.199.55");
+    //     addCandidate("Provider 3", 10, "13.456.199.56");
+    // }
+
+    function addCandidate (string memory _name, uint _space, string memory _ipAddress) public {
         candidatesCount ++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, _space, false, _ipAddress);
     }

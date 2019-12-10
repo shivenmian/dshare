@@ -50,6 +50,20 @@ App = {
         App.render();
       });
     });
+
+    App.contracts.Election.deployed().then(function(instance) {
+      // Restart Chrome if you are unable to receive this event
+      // This is a known issue with Metamask
+      // https://github.com/MetaMask/metamask-extension/issues/2393
+      instance.addedEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        console.log("event triggered", event)
+        // Reload when a new vote is recorded
+        App.render();
+      });
+    });
   },
 
   render: function() {
@@ -142,6 +156,15 @@ App = {
     var providerName = $("#providerName").val();
     var socketAddress = $("#socketAddress").val();
     var spaceAvailable = $("#spaceAvailable").val();
+    App.contracts.Election.deployed().then(function(instance) {
+      return instance.addCandidate(providerName, parseInt(spaceAvailable, 10), socketAddress, { from: App.account })
+    }).then(function(result){
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err){
+      console.error(err);
+    });
+
     // console.log(providerName)
   }
 

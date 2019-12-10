@@ -34,7 +34,7 @@
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Space (GB)</th>
-                  <th scope="col">IP Address</th>
+                  <th scope="col">Socket Address</th>
                 </tr>
               </thead>
               <tbody id="candidatesResults">
@@ -50,11 +50,11 @@
               <button type="submit" class="btn btn-primary">Share</button>
               <hr />
             </form>
-            <button id="addProviderButton" type="button" class="btn btn-primary" onclick="App.showUserForm();" >Add Provider</button>
+            <button id="addProviderButton" type="button" class="btn btn-primary" onClick="App.showUserForm();" >Add Provider</button>
             <br>
             <div class="form-group" id=createProvider>
               <br>
-              <form onsubmit="App.addUser(); return false;" >
+              <form onSubmit="App.addUser(); return false;" >
                 Provider Name<br>
                 <input type="text" id="providerName"><br>
                 Socket Address<br>
