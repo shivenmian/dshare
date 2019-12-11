@@ -45,25 +45,21 @@ App = {
         fromBlock: 0,
         toBlock: 'latest'
       }).watch(function(error, event) {
-        console.log("event triggered", event)
+        console.log("vote event triggered", event)
+        // Reload when a new vote is recorded
+        App.render();
+      });
+
+      instance.addedEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        console.log("add event triggered", event)
         // Reload when a new vote is recorded
         App.render();
       });
     });
 
-    App.contracts.Election.deployed().then(function(instance) {
-      // Restart Chrome if you are unable to receive this event
-      // This is a known issue with Metamask
-      // https://github.com/MetaMask/metamask-extension/issues/2393
-      instance.addedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }).watch(function(error, event) {
-        console.log("event triggered", event)
-        // Reload when a new vote is recorded
-        App.render();
-      });
-    });
   },
 
   render: function() {
@@ -97,25 +93,19 @@ App = {
       var candidatesSelect = $('#candidatesSelect');
       candidatesSelect.empty();
 
+      console.log(candidatesCount);
+
       for (var i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];
           var space = candidate[2];
           var matched = candidate[3];
-          var ipAddress = candidate[4];
+          var socketadd = candidate[4];
 
-          // Render candidate Result
-          if (matched == true) {
-            var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + ipAddress + "</td></tr>"
-          }
-          else {
-            var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + matched + "</td></tr>"
-          }
-          candidatesResults.append(candidateTemplate);
-
-          // Render candidate ballot option
           if (matched == false) {
+          	var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + socketadd + "</td></tr>";
+          	candidatesResults.append(candidateTemplate);
             var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
             candidatesSelect.append(candidateOption);
           }
