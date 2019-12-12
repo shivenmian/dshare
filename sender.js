@@ -19,3 +19,6 @@ server = net.createServer(socket => {
 })
 
 server.listen(8000, '168.150.103.86');
+
+//use ip of provider only to block requests from other people?
+//get your own ip
