@@ -41,23 +41,34 @@ App = {
       // Restart Chrome if you are unable to receive this event
       // This is a known issue with Metamask
       // https://github.com/MetaMask/metamask-extension/issues/2393
-      instance.votedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }).watch(function(error, event) {
-        console.log("vote event triggered", event)
-        // Reload when a new vote is recorded
-        App.render();
-      });
 
-      instance.addedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }).watch(function(error, event) {
-        console.log("add event triggered", event)
-        // Reload when a new vote is recorded
-        App.render();
-      });
+      var events = instance.allEvents();
+
+		// watch for changes
+	  events.watch(function(error, result){
+		if (!error){
+			console.log(result);
+			App.render();
+		}
+	  });
+	  
+      // instance.votedEvent({}, {
+      //   fromBlock: 0,
+      //   toBlock: 'latest'
+      // }).watch(function(error, event) {
+      //   console.log("vote event triggered", event)
+      //   // Reload when a new vote is recorded
+      //   App.render();
+      // });
+
+      // instance.addedEvent({}, {
+      //   fromBlock: 0,
+      //   toBlock: 'latest'
+      // }).watch(function(error, event) {
+      //   console.log("add event triggered", event)
+      //   // Reload when a new vote is recorded
+      //   App.render();
+      // });
     });
 
   },
