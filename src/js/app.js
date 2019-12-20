@@ -160,6 +160,10 @@ App = {
     App.contracts.Election.deployed().then(function(instance) {
       return instance.addCandidate(providerName, parseInt(spaceAvailable, 10), socketAddress, { from: App.account })
     }).then(function(result){
+      $("#providerName").val('');
+      $("#socketAddress").val('');
+      $("#spaceAvailable").val('');
+      
       $("#content").hide();
       $("#loader").show();
     }).catch(function(err){
