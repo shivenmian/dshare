@@ -1,2 +1,2 @@
 # dshare
-DShare: Decentralised Platform for Resource Sharing
+DShare: Decentralised Platform for Storage Sharing

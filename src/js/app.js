@@ -41,25 +41,50 @@ App = {
       // Restart Chrome if you are unable to receive this event
       // This is a known issue with Metamask
       // https://github.com/MetaMask/metamask-extension/issues/2393
-      instance.votedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }).watch(function(error, event) {
-        console.log("event triggered", event)
-        // Reload when a new vote is recorded
-        App.render();
-      });
+
+      var events = instance.allEvents();
+
+		// watch for changes
+	  events.watch(function(error, result){
+		if (!error){
+			console.log(result);
+			App.render();
+		}
+	  });
+	  
+      // instance.votedEvent({}, {
+      //   fromBlock: 0,
+      //   toBlock: 'latest'
+      // }).watch(function(error, event) {
+      //   console.log("vote event triggered", event)
+      //   // Reload when a new vote is recorded
+      //   App.render();
+      // });
+
+      // instance.addedEvent({}, {
+      //   fromBlock: 0,
+      //   toBlock: 'latest'
+      // }).watch(function(error, event) {
+      //   console.log("add event triggered", event)
+      //   // Reload when a new vote is recorded
+      //   App.render();
+      // });
     });
+
   },
 
   render: function() {
     var electionInstance;
     var loader = $("#loader");
     var content = $("#content");
+    var createProvider = $("#createProvider");
+    // var addProviderButton = $("#addProviderButton");
 
     loader.show();
     content.hide();
-
+    createProvider.hide();
+ 
+    
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -79,20 +104,22 @@ App = {
       var candidatesSelect = $('#candidatesSelect');
       candidatesSelect.empty();
 
+      console.log(candidatesCount);
+
       for (var i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];
           var space = candidate[2];
           var matched = candidate[3];
+          var socketadd = candidate[4];
 
-          // Render candidate Result
-          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + matched + "</td></tr>"
-          candidatesResults.append(candidateTemplate);
-
-          // Render candidate ballot option
-          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
-          candidatesSelect.append(candidateOption);
+          if (matched == false) {
+          	var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + space + "</td><td>" + socketadd + "</td></tr>";
+          	candidatesResults.append(candidateTemplate);
+            var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
+            candidatesSelect.append(candidateOption);
+          }
         });
       }
       //return electionInstance.voters(App.account);
@@ -119,8 +146,36 @@ App = {
     }).catch(function(err) {
       console.error(err);
     });
+  },
+
+  showUserForm: function() {
+    var createProvider = $("#createProvider");
+    createProvider.show();
+  },
+
+  addUser: function() {
+    var providerName = $("#providerName").val();
+    var socketAddress = $("#socketAddress").val();
+    var spaceAvailable = $("#spaceAvailable").val();
+    App.contracts.Election.deployed().then(function(instance) {
+      return instance.addCandidate(providerName, parseInt(spaceAvailable, 10), socketAddress, { from: App.account })
+    }).then(function(result){
+      $("#providerName").val('');
+      $("#socketAddress").val('');
+      $("#spaceAvailable").val('');
+      
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err){
+      console.error(err);
+    });
+
+    // console.log(providerName)
   }
+
 };
+
+
 
 $(function() {
   $(window).load(function() {
